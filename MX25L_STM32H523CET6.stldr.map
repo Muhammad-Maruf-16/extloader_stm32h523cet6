@@ -1,0 +1,113 @@
+
+Discarded input sections
+
+ .data          0x00000000        0x0 Dev_Inf.o
+ .bss           0x00000000        0x0 Dev_Inf.o
+ .data          0x00000000        0x0 Loader_Src.o
+ .bss           0x00000000        0x0 Loader_Src.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+Dev_Info         0x00000000         0x00000200         r
+RAM              0x20000004         0x00010000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD Dev_Inf.o
+LOAD Loader_Src.o
+
+.Dev_Info       0x00000000       0xc8
+ *(.Dev_Info)
+ .Dev_Info      0x00000000       0xc8 Dev_Inf.o
+                0x00000000                StorageInfo
+
+.text           0x20000004      0x50c
+                0x20000004                        . = ALIGN (0x4)
+ *(.text)
+ .text          0x20000004        0x0 Dev_Inf.o
+ .text          0x20000004        0x0 Loader_Src.o
+ *(.text*)
+ .text.OCTOSPI1_SetIndirect
+                0x20000004       0x40 Loader_Src.o
+ .text.OCTOSPI1_SetMemoryMapped
+                0x20000044       0x50 Loader_Src.o
+ .text.Flash_WaitBusy
+                0x20000094       0x58 Loader_Src.o
+ .text.Flash_WriteEnable
+                0x200000ec       0x34 Loader_Src.o
+ .text.Init     0x20000120      0x1a8 Loader_Src.o
+                0x20000120                Init
+ .text.Write    0x200002c8       0xb4 Loader_Src.o
+                0x200002c8                Write
+ .text.SectorErase
+                0x2000037c       0x78 Loader_Src.o
+                0x2000037c                SectorErase
+ .text.MassErase
+                0x200003f4       0x4c Loader_Src.o
+                0x200003f4                MassErase
+ .text.Read     0x20000440       0x44 Loader_Src.o
+                0x20000440                Read
+ .text.CheckSum
+                0x20000484       0x40 Loader_Src.o
+                0x20000484                CheckSum
+ .text.Verify   0x200004c4       0x4c Loader_Src.o
+                0x200004c4                Verify
+ *(.rodata)
+ *(.rodata*)
+                0x20000510                        . = ALIGN (0x4)
+
+.glue_7         0x20000510        0x0
+ .glue_7        0x20000510        0x0 linker stubs
+
+.glue_7t        0x20000510        0x0
+ .glue_7t       0x20000510        0x0 linker stubs
+
+.vfp11_veneer   0x20000510        0x0
+ .vfp11_veneer  0x20000510        0x0 linker stubs
+
+.v4_bx          0x20000510        0x0
+ .v4_bx         0x20000510        0x0 linker stubs
+
+.iplt           0x20000510        0x0
+ .iplt          0x20000510        0x0 Loader_Src.o
+
+.rel.dyn        0x20000510        0x0
+ .rel.iplt      0x20000510        0x0 Loader_Src.o
+
+.data           0x20000510        0x0
+                0x20000510                        . = ALIGN (0x4)
+ *(.data)
+ *(.data*)
+                0x20000510                        . = ALIGN (0x4)
+
+.igot.plt       0x20000510        0x0
+ .igot.plt      0x20000510        0x0 Loader_Src.o
+
+.bss            0x20000510        0x0
+                0x20000510                        . = ALIGN (0x4)
+                0x20000510                        _sbss = .
+ *(.bss)
+ *(.bss*)
+ *(COMMON)
+                0x20000510                        . = ALIGN (0x4)
+                0x20000510                        _ebss = .
+
+/DISCARD/
+ *(.ARM.exidx*)
+ *(.ARM.extab*)
+OUTPUT(MX25L_STM32H523CET6.stldr elf32-littlearm)
+LOAD linker stubs
+
+.comment        0x00000000       0x43
+ .comment       0x00000000       0x43 Dev_Inf.o
+                                 0x44 (size before relaxing)
+ .comment       0x00000043       0x44 Loader_Src.o
+
+.ARM.attributes
+                0x00000000       0x3a
+ .ARM.attributes
+                0x00000000       0x3a Dev_Inf.o
+ .ARM.attributes
+                0x0000003a       0x3a Loader_Src.o
